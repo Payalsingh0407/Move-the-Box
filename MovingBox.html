@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Move the Box</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: #f7f9fc;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .container {
+      position: relative;
+      width: 90vw;
+      height: 70vh;
+      max-width: 900px;
+      border: 2px dashed #ccc;
+      background-color: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .square {
+      width: 100px;
+      height: 100px;
+      background-color: #2ecc71; /* Green box */
+      position: absolute;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: top 0.4s ease, left 0.4s ease, transform 0.2s ease;
+    }
+
+    .buttons {
+      margin-top: 25px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    button {
+      padding: 12px 18px;
+      border: none;
+      background-color: #1d3557;
+      color: #fff;
+      font-size: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #457b9d;
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Green box has six options to move</h1>
+
+  <div class="container" id="container">
+    <div class="square" id="square"></div>
+  </div>
+
+  <div class="buttons">
+    <button onclick="moveSquare('top-left')">Top Left</button>
+    <button onclick="moveSquare('top-center')">Top Center</button>
+    <button onclick="moveSquare('top-right')">Top Right</button>
+    <button onclick="moveSquare('bottom-left')">Bottom Left</button>
+    <button onclick="moveSquare('bottom-right')">Bottom Right</button>
+    <button onclick="moveSquare('center')">Center</button>
+  </div>
+
+  <script>
+    const square = document.getElementById("square");
+    const container = document.getElementById("container");
+    const squareSize = 100;
+
+    function moveSquare(position) {
+      const containerRect = container.getBoundingClientRect();
+      let top = 0, left = 0;
+
+      switch (position) {
+        case 'top-left':
+          top = 0;
+          left = 0;
+          break;
+        case 'top-center':
+          top = 0;
+          left = (containerRect.width - squareSize) / 2;
+          break;
+        case 'top-right':
+          top = 0;
+          left = containerRect.width - squareSize;
+          break;
+        case 'bottom-left':
+          top = containerRect.height - squareSize;
+          left = 0;
+          break;
+        case 'bottom-right':
+          top = containerRect.height - squareSize;
+          left = containerRect.width - squareSize;
+          break;
+        case 'center':
+          top = (containerRect.height - squareSize) / 2;
+          left = (containerRect.width - squareSize) / 2;
+          break;
+      }
+
+      square.style.top = `${top}px`;
+      square.style.left = `${left}px`;
+
+      square.style.transform = 'scale(1.1)';
+      setTimeout(() => {
+        square.style.transform = 'scale(1)';
+      }, 150);
+    }
+  </script>
+
+</body>
+</html>
